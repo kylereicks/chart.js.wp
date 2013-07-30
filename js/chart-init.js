@@ -51,8 +51,8 @@
 
         for(var c = 0, cl = table.rows[r].cells.length; c < cl; c++){
           if(!isNaN(table.rows[r].cells[c].innerHTML)){
-            chartData[r].color = chartWP.colors[r];
-            chartData[r].value = table.rows[r].cells[c].innerHTML;
+            chartData[r].value = + table.rows[r].cells[c].innerHTML;
+            chartData[r].color = chartWP.colors[r] || chartWP.colors[0];
           }
         }
       }
