@@ -74,11 +74,6 @@ if(!class_exists('Chart_WP')){
         foreach($tables as $table){
           if(true === $table->hasAttribute('data-chart')){
             $chart_in_post = true;
-            $chart_type = '' === $table->getAttribute('data-chart') ? '' : '="' . $table->getAttribute('data-chart') . '"';
-            preg_match('/^<[^>]+>/i', self::fix_empty_attributes(html_entity_decode($DOMDocument->saveXML($table), ENT_COMPAT, 'UTF-8')), $opening_tag_match);
-            $table_opening_tag = $opening_tag_match[0];
-            $canvas = '<canvas data-chart' . $chart_type . ' data-source="' . $table->getAttribute('id') . '"></canvas>';
-            $content = str_replace($table_opening_tag, $canvas . "\n" . $table_opening_tag, $content);
           }
         }
       }

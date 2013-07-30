@@ -17,8 +17,7 @@
   chartWP.colors[255] = chartWP.colors[255] || 'rgba(255, 255, 255, 1)';
 
   // Get data from table and format as JSON for Chart.js
-  w.getTableData = function(tableID, chartType){
-    var table = w.document.getElementById(tableID);
+  w.getTableData = function(table, chartType){
 
     if('bar' === chartType || 'line' === chartType || 'radar' === chartType){
       var chartData = {};
@@ -61,36 +60,37 @@
     return chartData;
   };
 
-  // Roundup the canvas elements in the document
-  var canvases = w.document.getElementsByTagName('canvas');
+  var tables = w.document.getElementsByTagName('table');
 
   // Loop through the canvas elements
-  for(var i = 0, ci = canvases.length; i < ci; i++){
+  for(var i = 0, ti = tables.length; i < ti; i++){
 
     // If canvas element is to be a chart, initialize that chart
-    if(canvases[i].hasAttribute('data-chart')){
-      var chartType = canvases[i].getAttribute('data-chart') || 'Bar';
+    if(tables[i].hasAttribute('data-chart')){
+      var canvas = w.document.createElement('canvas');
+      var chartType = tables[i].getAttribute('data-chart') || 'Bar';
       switch(chartType.toLowerCase()){
         case 'bar':
-          new Chart(canvases[i].getContext('2d')).Bar(w.getTableData(canvases[i].getAttribute('data-source'), 'bar'));
+          new Chart(canvas.getContext('2d')).Bar(w.getTableData(tables[i], 'bar'));
           break;
         case 'line':
-          new Chart(canvases[i].getContext('2d')).Line(w.getTableData(canvases[i].getAttribute('data-source'), 'line'));
+          new Chart(canvas.getContext('2d')).Line(w.getTableData(tables[i], 'line'));
           break;
         case 'radar':
-          new Chart(canvases[i].getContext('2d')).Radar(w.getTableData(canvases[i].getAttribute('data-source'), 'radar'));
+          new Chart(canvas.getContext('2d')).Radar(w.getTableData(tables[i], 'radar'));
           break;
         case 'polararea':
         case 'polar area':
-          new Chart(canvases[i].getContext('2d')).PolarArea(w.getTableData(canvases[i].getAttribute('data-source'), 'polararea'));
+          new Chart(canvas.getContext('2d')).PolarArea(w.getTableData(tables[i], 'polararea'));
           break;
         case 'pie':
-          new Chart(canvases[i].getContext('2d')).Pie(w.getTableData(canvases[i].getAttribute('data-source'), 'pie'));
+          new Chart(canvas.getContext('2d')).Pie(w.getTableData(tables[i], 'pie'));
           break;
         case 'doughnut':
-          new Chart(canvases[i].getContext('2d')).Doughnut(w.getTableData(canvases[i].getAttribute('data-source'), 'doughnut'));
+          new Chart(canvas.getContext('2d')).Doughnut(w.getTableData(tables[i], 'doughnut'));
           break;
       }
+      tables[i].parentNode.insertBefore(canvas, tables[i]);
     }
   }
 
