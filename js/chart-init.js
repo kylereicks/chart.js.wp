@@ -1,5 +1,20 @@
 ;(function(w){
-	'use strict';
+  'use strict';
+
+  // Color Defaults
+  var chartWP = chartWP || {};
+  chartWP.colors = chartWP.colors || [];
+  chartWP.colors[0] = chartWP.colors[0] || 'rgba(181, 137, 0, 1)';
+  chartWP.colors[1] = chartWP.colors[1] || 'rgba(203, 75, 22, 1)';
+  chartWP.colors[2] = chartWP.colors[2] || 'rgba(220, 50, 47, 1)';
+  chartWP.colors[3] = chartWP.colors[3] || 'rgba(211, 54, 130, 1)';
+  chartWP.colors[4] = chartWP.colors[4] || 'rgba(108, 113, 196, 1)';
+  chartWP.colors[5] = chartWP.colors[5] || 'rgba(38, 139, 210, 1)';
+  chartWP.colors[6] = chartWP.colors[6] || 'rgba(42, 161, 152, 1)';
+  chartWP.colors[7] = chartWP.colors[7] || 'rgba(133, 153, 0, 1)';
+  chartWP.colors[8] = chartWP.colors[8] || 'rgba(7, 54, 66, 1)';
+  chartWP.colors[9] = chartWP.colors[9] || 'rgba(238, 232, 213, 1)';
+  chartWP.colors[255] = chartWP.colors[255] || 'rgba(255, 255, 255, 1)';
 
   // Get data from table and format as JSON for Chart.js
   w.getTableData = function(tableID, chartType){
@@ -18,6 +33,10 @@
 
       for(var r = 1, rl = table.rows.length; r < rl; r++){
         chartData.datasets[r - 1] = {};
+        chartData.datasets[r - 1].fillColor = chartWP.colors[r - 1].match(/.+(?=1\)$)/) + '.5)';
+        chartData.datasets[r - 1].strokeColor = chartWP.colors[r - 1];
+        chartData.datasets[r - 1].pointColor = chartWP.colors[r - 1];
+        chartData.datasets[r - 1].pointStrokeColor = chartWP.colors[255];
         chartData.datasets[r - 1].data = [];
 
         for(var c = 0, cl = table.rows[r].cells.length; c < cl; c++){
@@ -32,6 +51,7 @@
 
         for(var c = 0, cl = table.rows[r].cells.length; c < cl; c++){
           if(!isNaN(table.rows[r].cells[c].innerHTML)){
+            chartData[r].color = chartWP.colors[r];
             chartData[r].value = table.rows[r].cells[c].innerHTML;
           }
         }
