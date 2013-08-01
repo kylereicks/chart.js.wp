@@ -67,7 +67,7 @@ if(!class_exists('Chart_WP')){
     public function init_chart_js($content){
       $chart_in_post = false;
       $DOMDocument = new DOMDocument;
-      $DOMDocument->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' . $content);
+      $DOMDocument->loadHTML($content);
       $tables = $DOMDocument->getElementsByTagName('table');
 
       if($tables->length > 0){
