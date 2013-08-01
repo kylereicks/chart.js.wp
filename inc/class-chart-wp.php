@@ -46,7 +46,7 @@ if(!class_exists('Chart_WP')){
       add_action('wp_enqueue_scripts', array($this, 'register_scripts'));
 
       //Filters
-      add_filter('the_content', array($this, 'add_chart_canvas'));
+      add_filter('the_content', array($this, 'init_chart_js'));
     }
 
     // Actions
@@ -64,7 +64,7 @@ if(!class_exists('Chart_WP')){
     }
 
     // Filters
-    public function add_chart_canvas($content){
+    public function init_chart_js($content){
       $chart_in_post = false;
       $DOMDocument = new DOMDocument;
       $DOMDocument->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' . $content);
